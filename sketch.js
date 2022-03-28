@@ -25,10 +25,14 @@ let gameOver = false;
 let useAI = true;
 let mxDepth = 9;
 
+let sliderOffsetW = 0;
+
 let cache = {};
 
 function centerCanvas(){
   cnv.position((windowWidth - WIDTH) / 2, (windowHeight - HEIGHT) / 2);
+  sliderOffsetW = (windowWidth - WIDTH);
+  dSlider.position(windowWidth/2 - 300 / 2, windowHeight - HEIGHT + 50);
 }
 
 function resetSketch(){
@@ -65,6 +69,8 @@ function resetSketch(){
 let title, restart;
 
 function setup() {
+  dSlider = createSlider(0, 10, 1, 1);
+  dSlider.style('width', '300px');
   title = createDiv("Connect Four!");
   title.style('text-align', 'center');
   title.style('padding-top', '70px');
@@ -108,7 +114,7 @@ function draw() {
   fill(BLUE);
   strokeWeight(0);
   rect(0, 0, WIDTH, HEIGHT, 20);
-  if(!gameOver){
+  if(!gameOver && mouseY <= HEIGHT){
     let hoverCol = int(mouseX / (WIDTH / BWIDTH));
     let coin = 'yh';
     if(redTurn) coin = 'rh';
@@ -199,6 +205,9 @@ function draw() {
     text(rowVals[i], i * CSIZE_W + CSIZE_W * 0.5 , HEIGHT + 25);
     textAlign('center');
   }
+  text("Search Depth:", WIDTH * 0.46, HEIGHT + 70);
+  mxDepth = dSlider.value();
+  text(mxDepth, WIDTH * 0.65, HEIGHT + 70);
 }
 
 function isAvail(col, useCopy = false){
@@ -391,7 +400,7 @@ function aiMove(){
 }
 
 function mouseClicked(){
-  if(!gameOver && mouseX >= 0 && mouseX <= WIDTH){
+  if(!gameOver && mouseX >= 0 && mouseX <= WIDTH && mouseY <= HEIGHT){
     let col = int(mouseX / (WIDTH / BWIDTH));
     let coin = 'r';
     if(isAvail(col)){
