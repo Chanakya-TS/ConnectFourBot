@@ -32,7 +32,7 @@ let cache = {};
 function centerCanvas(){
   cnv.position((windowWidth - WIDTH) / 2, (windowHeight - HEIGHT) / 2);
   sliderOffsetW = (windowWidth - WIDTH);
-  dSlider.position(windowWidth/2 - 300 / 2, windowHeight - HEIGHT + 50);
+  dSlider.position(windowWidth/2 - 300 / 2, windowHeight - windowHeight /9);
 }
 
 function resetSketch(){
